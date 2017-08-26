@@ -1,1 +1,1 @@
-module.exports = pak => pak.prev('C_SELECT_USER') && pak.parse() && pak.parsed.unk1 === 1 && pak.parsed.unk2.equals(0)
+module.exports = pak => pak.prev('C_SELECT_USER') && pak.parse() && pak.parsed.unk1 === 1 && pak.parsed.unk2 === 0 && pak.parsed.unk3.equals(0)
