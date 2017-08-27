@@ -86,10 +86,10 @@ module.exports = function OpcodeScanner(dispatch) {
 			time: Date.now()
 		})
 
-		history.push(info)
-
 		if(map[code]) info.parse()
 		else scan(info)
+
+		history.push(info)
 
 		index++
 		if(fromServer) serverOrder++
@@ -107,11 +107,16 @@ module.exports = function OpcodeScanner(dispatch) {
 					if(info.parsedLength === info.data.length) {
 						console.log('Opcode found: ' + name + ' = ' + info.code)
 						map[info.code] = name
+
+						for(let packet of history)
+							if(packet.name() === name && packet.index !== info.index)
+								packet.parse()
+
 						writeMap()
 						delete patterns[name]
 						break
 					}
-					else console.log('Pattern matches but length is wrong: ' + name + ' = ' + info.code + ', ' + info.parsedLength + ' != ' + info.data.length)
+					else console.log('Possible match: ' + name + ' = ' + info.code + ' # length ' + info.parsedLength + ' (expected ' + info.data.length + ')')
 				}
 
 				delete info.parseName
