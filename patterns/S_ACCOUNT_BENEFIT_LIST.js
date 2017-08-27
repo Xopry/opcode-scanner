@@ -1,5 +1,5 @@
 module.exports = pak => {
-	let prev = pak.prev()
+	let prev = pak.prev('S_BROCAST_GUILD_FLAG')
 
-	return prev && prev.name() === 'S_BROCAST_GUILD_FLAG' && pak.parse() && pak.parsed.unk === 0
+	return prev && prev.index >= pak.index - 2 && pak.parse() && pak.parsed.unk === 0
 }
