@@ -154,7 +154,7 @@ module.exports = function OpcodeScanner(dispatch) {
 						delete loggedMatch[name]
 						break
 					}
-					else if((loggedMatch[name] || (loggedMatch[name] = []))[info.code]) {
+					else if(!(loggedMatch[name] || (loggedMatch[name] = []))[info.code]) {
 						loggedMatch[name][info.code] = true
 						console.log('Possible match: ' + name + ' = ' + info.code + ' # length ' + info.parsedLength + ' (expected ' + info.data.length + ')')
 					}
