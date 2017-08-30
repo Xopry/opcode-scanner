@@ -32,6 +32,8 @@ class PacketInfo {
 	}
 
 	first(name) {
+		if(!this.mapped[name]) return null
+
 		for(let packet of this.history)
 			if(packet.name() === name)
 				return packet
@@ -40,7 +42,22 @@ class PacketInfo {
 	prev(name) {
 		if(!name) return this.history[this.index - 1]
 
+		if(!this.mapped[name]) return null
+
 		for(let i = this.index - 1; i >= 0; i--) {
+			let packet = this.history[i]
+
+			if(packet.name() === name)
+				return packet
+		}
+	}
+
+	next(name) {
+		if(!name) return this.history[this.index + 1]
+
+		if(!this.mapped[name]) return null
+
+		for(let i = this.index + 1; i < this.history.length; i++) {
 			let packet = this.history[i]
 
 			if(packet.name() === name)
@@ -54,7 +71,8 @@ class PacketInfo {
 }
 
 module.exports = function OpcodeScanner(dispatch) {
-	let patterns = {}
+	let patterns = {},
+		loggedMatch = {}
 
 	{
 		let files = fs.readdirSync(path.join(__dirname, 'patterns')).filter(name => name.endsWith('.js'))
@@ -66,6 +84,7 @@ module.exports = function OpcodeScanner(dispatch) {
 
 	let version = 0,
 		map = {},
+		mapped = {},
 		history = [],
 		index = 0,
 		clientOrder = 0,
@@ -76,13 +95,14 @@ module.exports = function OpcodeScanner(dispatch) {
 
 		let info = new PacketInfo({
 			code,
-			data,
+			data: Buffer.from(data),
 			fromServer,
 			version,
 			map,
+			mapped,
 			history,
-			index,
-			order: fromServer ? serverOrder : clientOrder,
+			index: index++,
+			order: fromServer ? serverOrder++ : clientOrder++,
 			time: Date.now()
 		})
 
@@ -90,15 +110,31 @@ module.exports = function OpcodeScanner(dispatch) {
 		else scan(info)
 
 		history.push(info)
-
-		index++
-		if(fromServer) serverOrder++
-		else clientOrder++
 	})
 
+	// Passively scan packets so that signatures can have lookahead
+	;(async () => {
+		let connected = true
+
+		while(connected) {
+			await new Promise(resolve => setTimeout(resolve, 10000))
+
+			// Set connected state before scanning so that the final pass will definitely happen after disconnect
+			connected = dispatch.base.connection.state !== 3
+
+			for(let packet of history)
+				if(!packet.parsed) {
+					scan(packet)
+					await null
+				}
+		}
+	})()
+
 	function scan(info) {
+		let prefix = info.fromServer ? 'S_' : 'C_'
+
 		for(let name in patterns)
-			if(name.startsWith(info.fromServer ? 'S_' : 'C_')) {
+			if(name.startsWith(prefix)) {
 				info.parseName = name
 
 				if(patterns[name](info)) {
@@ -107,16 +143,21 @@ module.exports = function OpcodeScanner(dispatch) {
 					if(info.parsedLength === info.data.length) {
 						console.log('Opcode found: ' + name + ' = ' + info.code)
 						map[info.code] = name
+						mapped[name] = true
 
 						for(let packet of history)
-							if(packet.name() === name && packet.index !== info.index)
+							if(packet.code === info.code && packet.index !== info.index)
 								packet.parse()
 
 						writeMap()
 						delete patterns[name]
+						delete loggedMatch[name]
 						break
 					}
-					else console.log('Possible match: ' + name + ' = ' + info.code + ' # length ' + info.parsedLength + ' (expected ' + info.data.length + ')')
+					else if((loggedMatch[name] || (loggedMatch[name] = []))[info.code]) {
+						loggedMatch[name][info.code] = true
+						console.log('Possible match: ' + name + ' = ' + info.code + ' # length ' + info.parsedLength + ' (expected ' + info.data.length + ')')
+					}
 				}
 
 				delete info.parseName
@@ -127,9 +168,8 @@ module.exports = function OpcodeScanner(dispatch) {
 	function writeMap() {
 		let out = []
 
-		for(let code in map) out.push([map[code], code])
-		out.sort((a, b) => a[0] - b[0])
-		for(let i in out) out[i] = out[i].join(' = ')
+		for(let code in map) out.push(map[code] + ' = ' + code)
+		out.sort()
 
 		fs.writeFileSync(path.join(__dirname, 'protocol.' + version + '.map'), out.join('\n'))
 	}
