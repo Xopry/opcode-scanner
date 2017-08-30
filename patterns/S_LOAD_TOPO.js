@@ -1,0 +1,1 @@
+module.exports = pak => pak.parse() && pak.parsed.zone && pak.parsed.quick === false
