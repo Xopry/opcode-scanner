@@ -1,1 +1,1 @@
-module.exports = pak => pak.mapped['S_LOAD_TOPO']
+module.exports = pak => pak.mapped['S_LOGIN']
