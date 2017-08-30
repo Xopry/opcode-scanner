@@ -1,0 +1,1 @@
+module.exports = pak => pak.mapped['S_LOAD_TOPO']
