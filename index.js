@@ -1,3 +1,7 @@
+const PASSIVE_SCAN_INTERVAL = 10000,
+	PASSIVE_SCAN_TIMEOUT = 10, // Throttle settings to prevent hogging the event loop
+	PASSIVE_SCAN_HOLDOFF = 10
+
 const fs = require('fs'),
 	path = require('path'),
 	{protocol} = require('tera-data-parser')
@@ -117,16 +121,29 @@ module.exports = function OpcodeScanner(dispatch) {
 		let connected = true
 
 		while(connected) {
-			await new Promise(resolve => setTimeout(resolve, 10000))
+			await sleep(PASSIVE_SCAN_INTERVAL)
 
 			// Set connected state before scanning so that the final pass will definitely happen after disconnect
 			connected = dispatch.base.connection.state !== 3
 
+			let totalTime = Date.now(),
+				sleepTime = Date.now(),
+				unmapped = 0
+
 			for(let packet of history)
 				if(!packet.parsed) {
+					if(Date.now() - sleepTime > PASSIVE_SCAN_TIMEOUT && connected) {
+						await sleep(PASSIVE_SCAN_HOLDOFF)
+						sleepTime = Date.now()
+					}
+
 					scan(packet)
-					await null
+
+					if(!packet.parsed) unmapped++
 				}
+
+			totalTime = Date.now() - totalTime
+			console.log('Passive scan took ' + totalTime + 'ms, ' + unmapped + ' packets checked')
 		}
 	})()
 
@@ -172,5 +189,9 @@ module.exports = function OpcodeScanner(dispatch) {
 		out.sort()
 
 		fs.writeFileSync(path.join(__dirname, 'protocol.' + version + '.map'), out.join('\n'))
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms))
 	}
 }
