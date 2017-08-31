@@ -7,7 +7,7 @@ class PacketInfo {
 		Object.assign(this, info)
 	}
 
-	parse() {
+	parse(strictLength) {
 		this.triedParse = true
 		this.parsed = null
 		this.parsedLength = 0
@@ -24,7 +24,7 @@ class PacketInfo {
 			}
 			catch(e) {}
 
-		if(this.parsed) return true
+		if(this.parsed && (!strictLength || this.parsedLength === this.data.length)) return true
 
 		this.parsed = null
 		this.parsedLength = 0
