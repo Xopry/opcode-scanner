@@ -1,1 +1,5 @@
-module.exports = pak => pak.order === 4 && pak.parse() && pak.parsed.serverName.startsWith('PlanetDB_')
+module.exports = pak => {
+	let prev = pak.prev()
+
+	return prev && prev.name() === 'S_LOGIN_ARBITER' && pak.parse() && pak.parsed.serverName.startsWith('PlanetDB_')
+}
