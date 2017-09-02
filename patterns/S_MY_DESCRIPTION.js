@@ -1,1 +1,1 @@
-module.exports = pak => pak.mapped['S_LOGIN']
+module.exports = pak => pak.prev('S_LOGIN') && pak.parse(true)
