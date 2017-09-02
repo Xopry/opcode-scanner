@@ -197,12 +197,15 @@ module.exports = function OpcodeScanner(dispatch) {
 	}
 
 	function writeMap() {
-		let out = []
+		let mapsDir = path.join(__dirname, 'maps'),
+			out = []
 
 		for(let code in map) out.push(map[code] + ' = ' + code)
 		out.sort()
 
-		fs.writeFileSync(path.join(__dirname, 'protocol.' + version + '.map'), out.join('\n'))
+		if(!fs.existsSync(mapsDir)) fs.mkdirSync(mapsDir)
+
+		fs.writeFileSync(path.join(mapsDir, 'protocol.' + version + '.map'), out.join('\n'))
 	}
 
 	function sleep(ms) {
