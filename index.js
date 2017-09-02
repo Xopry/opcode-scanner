@@ -76,17 +76,8 @@ class PacketInfo {
 
 module.exports = function OpcodeScanner(dispatch) {
 	let patterns = {},
-		loggedMatch = {}
-
-	{
-		let files = fs.readdirSync(path.join(__dirname, 'patterns')).filter(name => name.endsWith('.js'))
-
-		for(let name of files) patterns[name.slice(0, name.indexOf('.'))] = require('./patterns/' + name)
-	}
-
-	console.log('Opcode scanner initialized, loaded ' + Object.keys(patterns).length + ' pattern(s).')
-
-	let version = 0,
+		loggedMatch = {},
+		version = 0,
 		map = {},
 		mapped = {},
 		history = [],
@@ -95,7 +86,30 @@ module.exports = function OpcodeScanner(dispatch) {
 		serverOrder = 0
 
 	dispatch.hook('*', 'raw', {order: -999999999}, (code, data, fromServer) => {
-		version = dispatch.base.protocolVersion
+		if(!version) {
+			version = dispatch.base.protocolVersion
+
+			try {
+				let lines = fs.readFileSync(path.join(__dirname, 'maps', 'protocol.' + version + '.map'), 'utf8').split('\n')
+
+				for(let line of lines) {
+					line = line.split(' = ')
+					map[Number(line[1])] = line[0]
+					mapped[line[0]] = true
+				}
+			}
+			catch(e) {}
+
+			let files = fs.readdirSync(path.join(__dirname, 'patterns')).filter(name => name.endsWith('.js'))
+
+			for(let name of files) {
+				name = name.slice(0, name.indexOf('.')) || name
+
+				if(!mapped[name]) patterns[name] = require('./patterns/' + name)
+			}
+
+			console.log('Opcode scanner initialized, loaded ' + Object.keys(patterns).length + '/' + files.length + ' patterns.')
+		}
 
 		let info = new PacketInfo({
 			code,
