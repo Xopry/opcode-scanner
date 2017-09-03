@@ -10,5 +10,5 @@ function dist3D(loc1, loc2) {
 }
 
 function isKorean(str) {
-	return /^[ ()_\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7a3\ud7b0\ud7ff]+$/.test(str)
+	return /^[ ()_\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7a3\ud7b0-\ud7ff]+$/.test(str)
 }
