@@ -1,0 +1,1 @@
+module.exports = pak => pak.prev('S_MY_DESCRIPTION') && pak.parse() && pak.parsed.unk3 === 16256 && pak.parsed.unk5 === 16256
