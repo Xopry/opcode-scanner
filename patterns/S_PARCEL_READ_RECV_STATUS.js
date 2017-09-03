@@ -1,0 +1,1 @@
+module.exports = pak => pak.prev('S_TRADE_BROKER_CALC_NOTIFY') && pak.parse(true)

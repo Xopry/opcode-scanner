@@ -1,0 +1,1 @@
+module.exports = pak => pak.prev('S_LOAD_CLIENT_USER_SETTING')
