@@ -1,1 +1,1 @@
-module.exports = pak => pak.parse() && pak.image.startsWith('guildlogo_')
+module.exports = pak => pak.parse() && pak.parsed.image.startsWith('guildlogo_')
