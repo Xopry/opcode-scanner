@@ -1,0 +1,1 @@
+module.exports = pak => pak.parse() && pak.image.startsWith('guildlogo_')
