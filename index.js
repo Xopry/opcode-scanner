@@ -190,6 +190,7 @@ module.exports = function OpcodeScanner(dispatch) {
 						console.log('Possible match: ' + name + ' = ' + info.code + ' # length ' + info.parsedLength + ' (expected ' + info.data.length + ')')
 					}
 				}
+				else delete info.parsed
 
 				delete info.parseName
 				delete info.triedParse
