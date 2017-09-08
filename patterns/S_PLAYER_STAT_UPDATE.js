@@ -1,0 +1,1 @@
+module.exports = pak => pak.parse() && pak.parsed.bonusHp === 0 && pak.parsed.curStamina === 120 && pak.parsed.maxStamina === 120
