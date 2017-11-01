@@ -1,10 +1,16 @@
 module.exports = pak => {
+	let S_LOGIN = pak.prev('S_LOGIN');
 	let hex = pak.data.toString('hex');
+
 	return (
+		S_LOGIN &&
+		pak.mapped['S_LOGIN'] &&
 		pak.parse() &&
-		pak.parsed.currentMp === pak.parsed.maxMp &&
-		hex.length === 72 &&
-		pak.parsed.type === 0
+		pak.parsed.curMp >= 0 &&
+		pak.parsed.maxMp > 0 &&
+		S_LOGIN.parsed.cid.low === pak.parsed.target.low &&
+		S_LOGIN.parsed.cid.high === pak.parsed.target.high &&
+		hex.length === 72
 	);
 };
 

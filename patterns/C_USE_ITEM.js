@@ -1,14 +1,14 @@
 module.exports = pak => {
 	let S_LOGIN = pak.prev('S_LOGIN');
 	let hex = pak.data.toString('hex');
-	let p = pak.parse();
-	console.log(p.parsed);
 	return (
 		S_LOGIN &&
-		p &&
-		pak.parsed.ownerId === S_LOGIN.parsed.cid &&
+		pak.mapped['S_LOGIN'] &&
+		pak.parse() &&
+		pak.parsed.ownerId.low === S_LOGIN.parsed.cid.low &&
+		pak.parsed.ownerId.high === S_LOGIN.parsed.cid.high &&
 		hex.length === 150 &&
-		/1$/gi.test(hex)
+		pak.parsed.unk11 === 1
 	);
 };
 

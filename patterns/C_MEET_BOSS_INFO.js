@@ -1,15 +1,17 @@
 module.exports = pak => {
-	let prv = pak.prev('S_LOAD_TOPO');
+	let S_BOSS_GAGE_INFO = pak.prev('S_BOSS_GAGE_INFO');
+
 	return (
-		prv &&
-		pak.mapped['S_LOAD_TOPO'] &&
+		S_BOSS_GAGE_INFO &&
+		pak.mapped['S_BOSS_GAGE_INFO'] &&
 		pak.parse() &&
-		pak.parsed.huntingZoneId === prv.parsed.zone
+		pak.parsed.huntingZoneId === S_BOSS_GAGE_INFO.parsed.huntingZoneId &&
+		pak.parsed.templateId === S_BOSS_GAGE_INFO.parsed.templateId
 	);
 };
 
 /**
  * C_MEET_BOSS_INFO
- * uint32 huntingZoneId  === S_LOAD_TOPO.zone
- * uint32 templateId
+ * uint32 huntingZoneId  === S_BOSS_GAGE_INFO.huntingZoneId
+ * uint32 templateId === S_BOSS_GAGE_INFO.templateId
  */
