@@ -1,0 +1,14 @@
+module.exports = pak => {
+	let prv = pak.prev('S_LOAD_TOPO');
+	return (
+		pak.mapped['S_LOAD_TOPO'] &&
+		pak.parse() &&
+		pak.huntingZoneId === prv.parsed.zone
+	);
+};
+
+/**
+ * C_MEET_BOSS_INFO
+ * uint32 huntingZoneId  === S_LOAD_TOPO.zone
+ * uint32 templateId
+ */
