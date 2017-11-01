@@ -3,6 +3,7 @@ module.exports = pak => {
 	let hex = pak.data.toString('hex');
 
 	return (
+		S_LOGIN &&
 		pak.parse() &&
 		pak.ownerId === S_LOGIN.parsed.cid &&
 		hex.length === 150 &&
