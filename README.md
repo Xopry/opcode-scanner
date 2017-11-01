@@ -1,3 +1,38 @@
-Heuristic opcode scanner module for Tera Proxy.
+# OPCODE-SCANNER
+> ## Thanks pinkipi
+# UPDATE
+* 2017-11-02
+  * ADD C_MEET_BOSS_INFO
+  * ADD C_USE_ITEM
+  * ADD S_BOSS_GAGE_INFO
+  * ADD S_DUNGEON_EVENT_MESSAGE
+  * ADD S_NPC_MENU_SELECT
+    * 거래 중개인열면 적용됨
+  * ADD S_PLAYER_CHANGE_MP
+  * ADD S_QUEST_BALLOON
+  * ADD S_START_COOLTIME_ITEM 
+    * 상급 비약 먹으면 적용됨
 
-Outputs a `maps/protocol.version.map` file in the directory it's located in.
+# TODO
+* ShinraMeter DPS 용 opcode minimum
+  * C_CHECK_VERSION
+  * C_PLAYER_LOCATION
+  * S_ABNORMALITY_BEGIN
+  * S_ABNORMALITY_DAMAGE_ABSORB
+  * S_ABNORMALITY_END
+  * S_ABNORMALITY_REFRESH
+  * S_BOSS_GAGE_INFO
+  * S_CREATURE_CHANGE_HP
+  * S_DESPAWN_NPC
+  * S_EACH_SKILL_RESULT
+  * S_GET_USER_LIST
+  * S_LOAD_TOPO
+  * S_LOGIN
+  * S_NPC_OCCUPIER_INFO
+  * S_NPC_STATUS
+  * S_PLAYER_STAT_UPDATE
+  * S_SPAWN_ME
+  * S_SPAWN_NPC
+  * S_SPAWN_PROJECTILE
+  * S_SPAWN_USER
+  * S_START_USER_PROJECTILE

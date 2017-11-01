@@ -6,7 +6,7 @@ module.exports = pak => {
 		S_LOGIN &&
 		pak.mapped['S_LOGIN'] &&
 		pak.parse() &&
-		pak.parsed.curMp >= 0 &&
+		pak.parsed.currentMp >= 0 &&
 		pak.parsed.maxMp > 0 &&
 		S_LOGIN.parsed.cid.low === pak.parsed.target.low &&
 		S_LOGIN.parsed.cid.high === pak.parsed.target.high &&
