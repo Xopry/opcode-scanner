@@ -4,7 +4,7 @@ module.exports = pak => {
 		prv &&
 		pak.mapped['S_LOAD_TOPO'] &&
 		pak.parse() &&
-		pak.huntingZoneId === prv.parsed.zone
+		pak.parsed.huntingZoneId === prv.parsed.zone
 	);
 };
 

@@ -3,12 +3,14 @@ module.exports = pak => {
 	let S_ACTION_STAGE = pak.prev('C_MEET_BOSS_INFO');
 
 	return (
+		C_MEET_BOSS_INFO &&
+		S_ACTION_STAGE &&
 		pak.mapped['C_MEET_BOSS_INFO'] &&
 		pak.mapped['S_ACTION_STAGE'] &&
 		pak.parse() &&
-		pak.id === S_ACTION_STAGE.parsed.source &&
-		pak.huntingZoneId === C_MEET_BOSS_INFO.parsed.huntingZoneId &&
-		pak.templateId === C_MEET_BOSS_INFO.parsed.templateId
+		pak.parsed.id === S_ACTION_STAGE.parsed.source &&
+		pak.parsed.huntingZoneId === C_MEET_BOSS_INFO.parsed.huntingZoneId &&
+		pak.parsed.templateId === C_MEET_BOSS_INFO.parsed.templateId
 	);
 };
 

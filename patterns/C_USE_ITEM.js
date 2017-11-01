@@ -1,11 +1,12 @@
 module.exports = pak => {
 	let S_LOGIN = pak.prev('S_LOGIN');
 	let hex = pak.data.toString('hex');
-
+	let p = pak.parse();
+	console.log(p.parsed);
 	return (
 		S_LOGIN &&
-		pak.parse() &&
-		pak.ownerId === S_LOGIN.parsed.cid &&
+		p &&
+		pak.parsed.ownerId === S_LOGIN.parsed.cid &&
 		hex.length === 150 &&
 		/1$/gi.test(hex)
 	);
