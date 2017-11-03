@@ -1,6 +1,6 @@
 module.exports = pak => {
-	let hex = pak.data.toString('hex');
-	let S_SPAWN_DROPITEM = pak.prev('S_SPAWN_DROPITEM');
+	const hex = pak.data.toString('hex');
+	const S_SPAWN_DROPITEM = pak.prev('S_SPAWN_DROPITEM');
 
 	return (
 		S_SPAWN_DROPITEM &&

@@ -1,5 +1,5 @@
 module.exports = pak => {
-	let S_ACTION_STAGE = pak.prev('S_ACTION_STAGE');
+	const S_ACTION_STAGE = pak.prev('S_ACTION_STAGE');
 
 	return (
 		S_ACTION_STAGE &&

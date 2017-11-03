@@ -1,6 +1,6 @@
 module.exports = pak => {
-	let hex = pak.data.toString('hex');
-	let C_RETURN_TO_LOBBY = pak.prev('C_RETURN_TO_LOBBY');
+	const hex = pak.data.toString('hex');
+	const C_RETURN_TO_LOBBY = pak.prev('C_RETURN_TO_LOBBY');
 
 	return (
 		C_RETURN_TO_LOBBY &&

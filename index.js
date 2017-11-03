@@ -1,10 +1,10 @@
-const PASSIVE_SCAN_INTERVAL = 10000,
-	PASSIVE_SCAN_TIMEOUT = 10, // Throttle settings to prevent hogging the event loop
-	PASSIVE_SCAN_HOLDOFF = 10;
+const PASSIVE_SCAN_INTERVAL = 10000;
+const PASSIVE_SCAN_TIMEOUT = 10; // Throttle settings to prevent hogging the event loop
+const PASSIVE_SCAN_HOLDOFF = 10;
 
-const fs = require('fs'),
-	path = require('path'),
-	{ protocol } = require('tera-data-parser');
+const fs = require('fs');
+const path = require('path');
+const { protocol } = require('tera-data-parser');
 
 class PacketInfo {
 	constructor(info) {
@@ -89,6 +89,7 @@ class PacketInfo {
 
 module.exports = function OpcodeScanner(dispatch) {
 	let patterns = {},
+		totalPatterns = 0,
 		loggedMatch = {},
 		version = 0,
 		map = {},
@@ -136,11 +137,13 @@ module.exports = function OpcodeScanner(dispatch) {
 						patterns[name] = require('./patterns/' + name);
 				}
 
+				totalPatterns = files.length;
+
 				console.log(
 					'Opcode scanner initialized, loaded ' +
 						Object.keys(patterns).length +
 						'/' +
-						files.length +
+						totalPatterns +
 						' patterns.'
 				);
 			}
@@ -216,11 +219,14 @@ module.exports = function OpcodeScanner(dispatch) {
 					if (!info.triedParse) info.parse();
 
 					if (info.parsedLength === info.data.length) {
-						console.log(
-							'Opcode found: ' + name + ' = ' + info.code
-						);
 						map[info.code] = name;
 						mapped[name] = true;
+
+						console.log(
+							`Opcode found: ${name} = ${info.code} ( ${Object.keys(
+								mapped
+							).length}/${totalPatterns} )`
+						);
 
 						for (let packet of history)
 							if (

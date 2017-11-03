@@ -1,5 +1,5 @@
 module.exports = pak => {
-	let S_BOSS_GAGE_INFO = pak.prev('S_BOSS_GAGE_INFO');
+	const S_BOSS_GAGE_INFO = pak.prev('S_BOSS_GAGE_INFO');
 
 	return (
 		S_BOSS_GAGE_INFO &&

@@ -1,5 +1,5 @@
 module.exports = pak => {
-	let prev = pak.prev('S_LOGIN');
+	const prev = pak.prev('S_LOGIN');
 
 	return (
 		prev &&

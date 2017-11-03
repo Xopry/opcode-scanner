@@ -1,5 +1,5 @@
 module.exports = pak => {
-	let next = pak.next()
+	const next = pak.next();
 
-	return next && next.name() === 'S_GET_USER_LIST' && pak.parse(true)
-}
+	return next && next.name() === 'S_GET_USER_LIST' && pak.parse(true);
+};

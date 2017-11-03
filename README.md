@@ -48,6 +48,8 @@ TODO
 ***
 
 * NEED 
+  * C_GET_USER_LIST <br> 321048 → 34987
+  ***
   * S_CANNOT_START_SKILL
   ***
   * C_COMPLETE_DAILY_EVENT <br> 321048 → 51043

@@ -1,6 +1,6 @@
 module.exports = pak => {
-	let S_LOGIN = pak.prev('S_LOGIN');
-	let hex = pak.data.toString('hex');
+	const S_LOGIN = pak.prev('S_LOGIN');
+	const hex = pak.data.toString('hex');
 
 	return (
 		S_LOGIN &&

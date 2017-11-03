@@ -1,7 +1,7 @@
 module.exports = pak => {
-	let hex = pak.data.toString('hex');
+	const hex = pak.data.toString('hex');
 
-	return pak.parse() && hex.length === 16 && /0800a97a1c000000/gi.test(hex);
+	return hex.length === 16 && /0800a97a1c000000/gi.test(hex);
 };
 
 /**

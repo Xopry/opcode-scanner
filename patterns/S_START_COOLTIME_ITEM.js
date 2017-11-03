@@ -1,11 +1,7 @@
 module.exports = pak => {
-	let hex = pak.data.toString('hex');
+	const hex = pak.data.toString('hex');
 
-	return (
-		pak.parse() &&
-		hex.length === 24 &&
-		/(^0c00)\w+(2711030005000000)$/gi.test(hex)
-	);
+	return hex.length === 24 && /(^0c00)\w+(2711030005000000)$/gi.test(hex);
 };
 
 /**
