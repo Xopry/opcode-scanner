@@ -1,6 +1,6 @@
 const PASSIVE_SCAN_INTERVAL = 10000,
-	PASSIVE_SCAN_TIMEOUT = 10000, // Throttle settings to prevent hogging the event loop
-	PASSIVE_SCAN_HOLDOFF = 10000;
+	PASSIVE_SCAN_TIMEOUT = 10, // Throttle settings to prevent hogging the event loop
+	PASSIVE_SCAN_HOLDOFF = 10;
 
 const fs = require('fs'),
 	path = require('path'),
