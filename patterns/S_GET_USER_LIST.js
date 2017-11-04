@@ -1,5 +1,11 @@
 module.exports = pak => {
-	const prev = pak.prev();
-
-	return prev && prev.name() === 'C_GET_USER_LIST';
+	return (
+		pak.parse() &&
+		[1, 2].includes(pak.parsed.characters[0].gender) &&
+		[0, 1, 2, 3, 4, 5].includes(pak.parsed.characters[0].race) &&
+		pak.parsed.characters[0].class >= 0 &&
+		pak.parsed.characters[0].class <= 12 &&
+		pak.parsed.characters[0].level >= 1 &&
+		pak.parsed.characters[0].level <= 65
+	);
 };

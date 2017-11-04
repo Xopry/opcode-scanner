@@ -1,6 +1,6 @@
 module.exports = pak => {
 	const hex = pak.data.toString('hex');
-	const C_SELECT_USER = pak.prev('C_SELECT_USER');
+	let C_SELECT_USER = pak.prev('C_SELECT_USER');
 
 	return (
 		C_SELECT_USER &&

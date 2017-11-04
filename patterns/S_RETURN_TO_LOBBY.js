@@ -1,5 +1,6 @@
 module.exports = pak => {
-	const next = pak.next();
+	const hex = pak.data.toString('hex');
+	let next = pak.next();
 
-	return next && next.name() === 'S_GET_USER_LIST' && pak.parse(true);
+	return next && next.name() === 'S_GET_USER_LIST' && hex.length === 8;
 };

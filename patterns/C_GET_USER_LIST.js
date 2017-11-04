@@ -1,1 +1,6 @@
-module.exports = pak => pak.data.toString('hex') === '0400ab88';
+module.exports = pak => {
+	const hex = pak.data.toString('hex');
+	let next = pak.next();
+
+	return next && next.name() === 'S_GET_USER_LIST' && hex.length === 8;
+};

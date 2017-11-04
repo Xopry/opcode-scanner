@@ -1,13 +1,13 @@
 module.exports = pak => {
 	const hex = pak.data.toString('hex');
-	const C_TRY_LOOT_DROPITEM = pak.prev('C_TRY_LOOT_DROPITEM');
+	let C_TRY_LOOT_DROPITEM = pak.prev('C_TRY_LOOT_DROPITEM');
 
 	return (
 		C_TRY_LOOT_DROPITEM &&
 		pak.mapped['C_TRY_LOOT_DROPITEM'] &&
 		pak.parse() &&
 		hex.length === 24 &&
-		C_TRY_LOOT_DROPITEM.parsed.equals(pak.parsed.id)
+		C_TRY_LOOT_DROPITEM.parsed.id.equals(pak.parsed.id)
 	);
 };
 

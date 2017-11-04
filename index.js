@@ -1,4 +1,4 @@
-const PASSIVE_SCAN_INTERVAL = 10000;
+const PASSIVE_SCAN_INTERVAL = 1000;
 const PASSIVE_SCAN_TIMEOUT = 10; // Throttle settings to prevent hogging the event loop
 const PASSIVE_SCAN_HOLDOFF = 10;
 
@@ -198,6 +198,7 @@ module.exports = function OpcodeScanner(dispatch) {
 				}
 
 			totalTime = Date.now() - totalTime;
+			/*
 			console.log(
 				'Passive scan took ' +
 					totalTime +
@@ -205,6 +206,7 @@ module.exports = function OpcodeScanner(dispatch) {
 					unmapped +
 					' packets checked'
 			);
+			*/
 		}
 	})();
 
