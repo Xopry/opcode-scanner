@@ -6,8 +6,7 @@ module.exports = pak => {
 		pak.mapped['S_ACTION_STAGE'] &&
 		pak.parse() &&
 		pak.parsed.id.high === S_ACTION_STAGE.parsed.source.high &&
-		pak.parsed.curHp.low === pak.parsed.maxHp.low &&
-		pak.parsed.curHp.high === pak.parsed.maxHp.high
+		pak.parsed.curHp.equals(pak.parsed.maxHp)
 	);
 };
 

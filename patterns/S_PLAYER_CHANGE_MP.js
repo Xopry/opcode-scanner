@@ -8,8 +8,7 @@ module.exports = pak => {
 		pak.parse() &&
 		pak.parsed.currentMp >= 0 &&
 		pak.parsed.maxMp > 0 &&
-		S_LOGIN.parsed.cid.low === pak.parsed.target.low &&
-		S_LOGIN.parsed.cid.high === pak.parsed.target.high &&
+		S_LOGIN.parsed.cid.equals(pak.parsed.target) &&
 		hex.length === 72
 	);
 };

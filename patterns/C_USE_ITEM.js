@@ -6,8 +6,7 @@ module.exports = pak => {
 		S_LOGIN &&
 		pak.mapped['S_LOGIN'] &&
 		pak.parse() &&
-		pak.parsed.ownerId.low === S_LOGIN.parsed.cid.low &&
-		pak.parsed.ownerId.high === S_LOGIN.parsed.cid.high &&
+		pak.parsed.ownerId.equals(S_LOGIN.parsed.cid) &&
 		hex.length === 150 &&
 		pak.parsed.unk11 === 1
 	);

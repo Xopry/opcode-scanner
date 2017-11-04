@@ -7,8 +7,7 @@ module.exports = pak => {
 		pak.mapped['S_SPAWN_DROPITEM'] &&
 		pak.parse() &&
 		hex.length === 24 &&
-		S_SPAWN_DROPITEM.parsed.id.low === pak.parsed.id.low &&
-		S_SPAWN_DROPITEM.parsed.id.high === pak.parsed.id.high
+		pak.parsed.id.equals(S_SPAWN_DROPITEM.parsed.id)
 	);
 };
 
