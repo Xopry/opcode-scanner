@@ -1,6 +1,12 @@
 module.exports = pak => {
-	let prev = pak.prev('S_LOGIN')
+	let S_LOGIN = pak.prev('S_LOGIN');
 
-	return prev && pak.parse() && pak.parsed.serverId === prev.parsed.serverId && Math.floor(prev.parsed.model / 10000) === 1
-		&& pak.parsed.name.length >= 2
-}
+	return (
+		S_LOGIN &&
+		pak.parse() &&
+		pak.parsed.serverId === S_LOGIN.parsed.serverId &&
+		Math.floor(S_LOGIN.parsed.model / 10000) === 1 &&
+		pak.parsed.level > 0 &&
+		pak.parsed.level <= 65
+	);
+};
