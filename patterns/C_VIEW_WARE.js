@@ -1,0 +1,24 @@
+module.exports = pak => {
+	if (!pak.parse()) return false;
+
+	return (
+		[1, 12].includes(pak.parsed.invType) &&
+		[0, 1, 2, 3, 4, 5, 6, 7].includes(pak.parsed.bankPos / 72)
+	);
+};
+
+/**
+ * C_VIEW_WARE
+	int64 source
+	int32 invType #1 = bank, 12 = costume
+	int32 bankPos #?
+
+	(34458) undefined 14009a86 617f0100 00800008 01000000 00000000
+	(34458) undefined 14009a86 f8500100 00800008 01000000 48000000	// 72
+	(34458) undefined 14009a86 f8500100 00800008 01000000 90000000	// 144
+	(34458) undefined 14009a86 f8500100 00800008 01000000 d8000000	// 216
+	(34458) undefined 14009a86 f8500100 00800008 01000000 20010000	// 288
+	(34458) undefined 14009a86 f8500100 00800008 01000000 68010000	// 
+	(34458) undefined 14009a86 f8500100 00800008 01000000 b0010000	// 
+	(34458) undefined 14009a86 f8500100 00800008 01000000 f8010000	//
+ */

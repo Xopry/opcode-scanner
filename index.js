@@ -227,7 +227,7 @@ module.exports = function OpcodeScanner(dispatch) {
 						console.log(
 							`Opcode found: ${name} = ${info.code} ( ${Object.keys(
 								mapped
-							).length}/${totalPatterns} )`
+							).length - 1}/${totalPatterns} )`
 						);
 
 						for (let packet of history)
