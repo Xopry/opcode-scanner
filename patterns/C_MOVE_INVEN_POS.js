@@ -1,9 +1,6 @@
 module.exports = pak => {
 	if (!pak.parse()) return false;
-	const hex = pak.data.toString('hex');
-
 	let next = pak.next();
-	if (pak.code === 42868) console.log(pak.parsed);
 
 	return (
 		next &&
@@ -16,7 +13,7 @@ module.exports = pak => {
 
 /**
  * C_MOVE_INVEN_POS
-	uint64 cid
+	uint64 source
 	int32 from
 	int32 to
 
